@@ -1,8 +1,9 @@
 from requests import Session
 import json
 
-
 from flask import Flask, request
+
+from function import reserve_seats
 
 
 def create_app():
@@ -16,32 +17,15 @@ def create_app():
 
         session = Session()
 
-        booking_reference = session.get("http://localhost:8082/booking_reference").text
+        booking_reference = session.get(
+            "http://localhost:8082/booking_reference").text
 
         train_data = session.get(
             f"http://localhost:8081/data_for_train/" + train_id
         ).json()
-        available_seats = (
-            s
-            for s in train_data["seats"].values()
-            if s["coach"] == "A" and not s["booking_reference"]
-        )
-        to_reserve = []
-        for i in range(seat_count):
-            to_reserve.append(next(available_seats))
 
-        seat_ids = [s["seat_number"] + s["coach"] for s in to_reserve]
-        reservation = {
-            "train_id": train_id,
-            "booking_reference": booking_reference,
-            "seats": seat_ids,
-        }
-
-        reservation_payload = {
-            "train_id": reservation["train_id"],
-            "seats": reservation["seats"],
-            "booking_reference": reservation["booking_reference"],
-        }
+        reservation_payload, reservation = reserve_seats(
+            train_data, seat_count, train_id, booking_reference)
 
         response = session.post(
             "http://localhost:8081/reserve",
