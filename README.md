@@ -7,8 +7,8 @@ activate it.
 
 ## Running the three webservices:
 
-* Make sure port 8081, 8082, and 8083 are free
-* Open three consoles and run
+- Make sure port 8081, 8082, and 8083 are free
+- Open three consoles and run
 
 ```
 $ cd train_data
