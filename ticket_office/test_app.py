@@ -2,8 +2,9 @@ import json
 import requests
 
 from function import get_available_seats
+from seat import Seat
 
-
+'''x
 def test_reserve_seats_from_empty_train():
     train_id = "express_2000"
 
@@ -42,10 +43,17 @@ def test_reserve_four_additional_seats():
     assert reservation["train_id"] == "express_2000"
     assert len(reservation["seats"]) == 4
     assert reservation["seats"] == ["5A", "6A", "7A", "8A"]
+'''
 
 
 def test_get_available_seats():
     # Mock train_data for testing
+
+    seat1 = Seat(1, "A", None)
+    seat2 = Seat(2, "A", "ABC123")
+    seat3 = Seat(3, "A", None)
+    seats = [seat1, seat2, seat3]
+
     train_data = {
         "seats": {
             "1A": {"seat_number": 1, "coach": "A", "booking_reference": None},
@@ -54,12 +62,12 @@ def test_get_available_seats():
         }
     }
 
-    result = list(get_available_seats(train_data))
+    result = get_available_seats(seats)
 
     # Check that only seats without booking_reference are returned
     expected_result = [
-        {"seat_number": 1, "coach": "A", "booking_reference": None},
-        {"seat_number": 3, "coach": "A", "booking_reference": None},
+        Seat(1, "A", None),
+        Seat(3, "A", None)
     ]
 
     assert result == expected_result

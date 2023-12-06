@@ -1,10 +1,10 @@
 
-def get_available_seats(train_data):
-    available_seats = (
-        s
-        for s in train_data["seats"].values()
-        if s["coach"] == "A" and not s["booking_reference"]
-    )
+def get_available_seats(seats):
+    available_seats = [
+        seat
+        for seat in seats
+        if seat.coach == "A" and not seat.booking_reference
+    ]
     return available_seats
 
 
