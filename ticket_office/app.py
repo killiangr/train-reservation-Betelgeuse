@@ -4,6 +4,7 @@ import json
 from flask import Flask, request
 
 from function import reserve_seats
+from train import Train
 
 
 def create_app():
@@ -24,8 +25,10 @@ def create_app():
             f"http://localhost:8081/data_for_train/" + train_id
         ).json()
 
+        train = Train(train_data, seat_count, train_id)
+
         reservation_payload, reservation = reserve_seats(
-            train_data, seat_count, train_id, booking_reference)
+            train, booking_reference)
 
         response = session.post(
             "http://localhost:8081/reserve",

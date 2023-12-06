@@ -8,15 +8,15 @@ def get_available_seats(train_data):
     return available_seats
 
 
-def reserve_seats(train_data, seat_count, train_id, booking_reference):
-    available_seats = get_available_seats(train_data)
+def reserve_seats(train, booking_reference):
+    available_seats = get_available_seats(train.train_data)
     to_reserve = []
-    for i in range(seat_count):
+    for i in range(train.seat_count):
         to_reserve.append(next(available_seats))
 
     seat_ids = [s["seat_number"] + s["coach"] for s in to_reserve]
     reservation = {
-        "train_id": train_id,
+        "train_id": train.train_id,
         "booking_reference": booking_reference,
         "seats": seat_ids,
     }
