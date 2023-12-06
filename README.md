@@ -1,10 +1,9 @@
-# Readme for TypeScript
+# Readme for Python
 
 ## Installing dependencies
 
-```
-yarn
-```
+Create a virtualenv, install the dependencies from `requirements.txt` in it, and
+activate it.
 
 ## Running the three webservices:
 
@@ -12,19 +11,25 @@ yarn
 * Open three consoles and run
 
 ```
-yarn start:booking-reference
+$ cd train_data
+$ python app.py
 ```
 
 ```
-yarn start:train-data
+$ cd booking_reference
+$ python app.py
 ```
 
 ```
-yarn start:ticket-office
+$ cd ticket_office
+$ python app.py
 ```
 
 ## Running the tests
 
+Activate the virtualenv and run:
+
 ```
-yarn test
+$ cd ticket_office
+$ python -m pytest
 ```
